@@ -193,16 +193,17 @@ def measure(method, d, sparsity, n_measures, reps=1000):
 
 
 def main():
-    fig, axs = plt.subplots(1, 5)
     n_sparsity = 10
     n_measurements = 50
     dim = 100
     reps = 100
-    fig.suptitle(f"Exact Recovery Rate with {dim} Dimensional Gaussian Measurements")
     methods = [lp, omp, cosamp2, iht, iht2, partial(iht, pinv=True)]
-    titles = ["LinProg", "OMP", "CoSaMP", "IHT", "IHT 2"  "IHT (pinv)"]
+    titles = ["LinProg", "OMP", "CoSaMP", "IHT", "IHT 2", "IHT (pinv)"]
     #methods = [iht, iht2, partial(iht, pinv=True), cosamp]
     #titles = ['iht', 'iht2', 'iht (pinv)', 'cosamp']
+    assert len(methods) == len(titles)
+    fig, axs = plt.subplots(1, len(methods))
+    fig.suptitle(f"Exact Recovery Rate with {dim} Dimensional Gaussian Measurements")
     for ax, method, title in zip(axs, methods, titles):
         data = np.zeros((n_measurements, n_sparsity))
         elapsed = 0
