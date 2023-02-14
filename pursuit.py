@@ -144,7 +144,7 @@ def iht2(M, x, s: int, max_iter=20):
     for it in range(max_iter):
         g = M2.T @ (M2 @ y - x)
         ids = _support(y, s)
-        mu = (g[ids] ** 2).sum() / (((M2[:,ids] @ g[ids]) ** 2).sum() + 1e-9)
+        mu = (g[ids] ** 2).sum() / (((M2[:, ids] @ g[ids]) ** 2).sum() + 1e-9)
         y = _treshold(y - mu * g, s)
     return y / norms[0]
 
@@ -199,8 +199,8 @@ def main():
     reps = 100
     methods = [lp, omp, cosamp2, iht, iht2, partial(iht, pinv=True)]
     titles = ["LinProg", "OMP", "CoSaMP", "IHT", "IHT 2", "IHT (pinv)"]
-    #methods = [iht, iht2, partial(iht, pinv=True), cosamp]
-    #titles = ['iht', 'iht2', 'iht (pinv)', 'cosamp']
+    # methods = [iht, iht2, partial(iht, pinv=True), cosamp]
+    # titles = ['iht', 'iht2', 'iht (pinv)', 'cosamp']
     assert len(methods) == len(titles)
     fig, axs = plt.subplots(1, len(methods))
     fig.suptitle(f"Exact Recovery Rate with {dim} Dimensional Gaussian Measurements")
@@ -243,4 +243,3 @@ def main2():
 
 if __name__ == "__main__":
     main()
-
